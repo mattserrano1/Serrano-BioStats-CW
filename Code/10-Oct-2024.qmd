@@ -1,0 +1,29 @@
+---
+title: "10-Oct-2024"
+format: html
+editor: visual
+---
+
+# Set up
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+```
+
+Summary Function
+
+```{r}
+test <- c(2,4,6,8,10,13,14,16,18,20)
+summary(test)
+```
+
+now a different way
+quantile will give you distrabutions of your data where you can set the ranges
+```{r}
+grades <- c(90, 94, 96, 90, 84, 86)
+summary(grades)
+quantile(grades, probs = c(0, 0.66, 1))
+```
+
