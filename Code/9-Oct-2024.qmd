@@ -1,0 +1,59 @@
+---
+title: "9-Oct-2024"
+format: html
+editor: visual
+---
+
+set up 
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+```
+
+laod in dataset
+
+```{r}
+tomatos <- read.csv(here("Data", "tomato_data.csv"))
+```
+
+slicing data
+
+```{r}
+slice(tomatos, c(3,7,9)) |> View()
+```
+
+fertalizer treamtment >145g
+
+```{r}
+tomatos %>% filter(Treatment == "Fertilizer" & Avg_tomato_weight_g >= 145) |> View()
+```
+
+How to create a new output folder
+This is used to save intermidiate outputs of data analysis
+
+```{r}
+dir.create("Outputs")
+```
+
+Writing csv into the new Outputs folder to keep it seperate from base data
+
+```{r}
+write.csv(tomatos,here("Outputs","tomatoes_notfixed.csv"),row.names = FALSE)
+```
+
+reading back in not fixed tomatoes
+
+```{r}
+toms2 <- read.csv(here("Outputs", "tomatoes_notfixed.csv"))
+```
+
+
+
+
+
+
+
+
+
