@@ -49,7 +49,31 @@ reading back in not fixed tomatoes
 toms2 <- read.csv(here("Outputs", "tomatoes_notfixed.csv"))
 ```
 
+## Chapter 3 group_by and summarize()
 
+reading in data
+
+```{r}
+lead <- read.csv(here("Data","NoCoLead.csv"))
+summary(lead)
+```
+
+What if we want to know the average number of tests given in the data set?
+
+```{r}
+lead |> summarize(
+  mean_num_tests = mean(num_tests)
+) |> View()
+```
+
+What is the mean number of tests per year?
+
+```{r}
+lead_summary <- lead |> 
+  group_by(Year) |>
+  summarize(mean_tests_per_year = mean(num_tests)
+  ) 
+```
 
 
 
