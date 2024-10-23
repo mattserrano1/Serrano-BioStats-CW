@@ -40,17 +40,14 @@ rabies <- rabies |> select(1:7)
 summary(rabies)
 ```
 
-2.  Repair column names
-names() returns the column names of the dataset
-you can also use it to assign the names of the columns in a dataset
+2.  Repair column names names() returns the column names of the dataset you can also use it to assign the names of the columns in a dataset
 
 ```{r}
 names(rabies)
 names(rabies) <- c("Received_Year","Received_Month","Report_Date",        "County_Name","Animal_Classification", "Number_of_Samples", "Positive_Samples")
 ```
 
-3.  Adjust data types
-changing character to factor data, checking for mistakes, changing to date
+3.  Adjust data types changing character to factor data, checking for mistakes, changing to date
 
 ```{r}
 rabies$County_Name <- as.factor(rabies$County_Name)
