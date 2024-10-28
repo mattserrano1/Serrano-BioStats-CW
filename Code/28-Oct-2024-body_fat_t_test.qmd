@@ -1,0 +1,52 @@
+---
+title: "Practice with t-tests"
+output: html_document
+date: "2022-10-27"
+---
+
+## Reviewing the t-test
+
+Let's conduct a 2-sample t-test to compare body fat percentage between men and women.
+
+The data set presents the body fat percentage for a sample of men and women who all work out at the same gym. In general, men are leaner than women, with a body fat percentage centering around 15% whereas for women it tends to center around 20%. Let’s see if the same is true of these data.
+
+## Instructions
+
+Use the information you learned from reading chapter 5 and doing homework 21 to conduct a t-test comparing mean body fat percentage between the male and female groups. But don’t just rush to the test – follow the recommended analysis workflow:
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+
+bodyfat <- read.csv(here("data","body_fat_percentage.csv"))
+```
+
+
+1.  Plot the data and look at expected relationships
+
+```{r}
+ggplot(bodyfat, aes(body_fat_percent))+
+  geom_histogram()+
+  facet_wrap(~gender, ncol=1)
+```
+
+2.  Calculate the mean and standard deviation for the data and examine the resulting output.
+
+```{r}
+fat_stats <- bodyfat |> group_by(gender) |>
+  summarise(mean_bodyfat = mean(body_fat_percent), 
+            sd_bodyfat = sd(body_fat_percent))
+```
+
+3.  Discuss with your partner:
+    -   Review in the book: What are the assumptions about the data appropriate for a t-test? When you examine the plots and summary data, do they appear to meet those assumptions?
+    I don't think they meet these assumptions. The Male data set does not seem to have a normal distribution of data, while the female one does appear to have a normal distribution. Their standard deviations are somewhat similar but not sure what actually counts as them being similar. 
+    -   Based on examination of the plots and summary data, do you expect that there is a statistically significant difference in mean body fat percentage between males and females in this sample?
+    No they seem to overlap a lot. 
+4.  Conduct a t-test and then interpret the results. What do they tell you about the null vs. alternative hypotheses?
+
+```{r}
+t.test(body_fat_percent ~ gender, data = bodyfat)
+```
+
