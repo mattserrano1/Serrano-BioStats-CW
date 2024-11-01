@@ -35,13 +35,14 @@ ggplot(bodyfat, aes(body_fat_percent))+
 
 ```{r}
 fat_stats <- bodyfat |> group_by(gender) |>
-  summarise(mean_bodyfat = mean(body_fat_percent), 
-            sd_bodyfat = sd(body_fat_percent))
+  summarise(mean_bodyfat = mean(body_fat_percent, na.rm = T), 
+            sd_bodyfat = sd(body_fat_percent, na.rm = T))
 ```
 
 3.  Discuss with your partner:
     -   Review in the book: What are the assumptions about the data appropriate for a t-test? When you examine the plots and summary data, do they appear to meet those assumptions?
-    I don't think they meet these assumptions. The Male data set does not seem to have a normal distribution of data, while the female one does appear to have a normal distribution. Their standard deviations are somewhat similar but not sure what actually counts as them being similar. 
+    Equal variance and independence
+    I don't know if they meet these assumptions. The Male data set does not seem to have a normal distribution of data, while the female one does appear to have a normal distribution. Their standard deviations are somewhat similar but not sure what actually counts as them being similar. 
     -   Based on examination of the plots and summary data, do you expect that there is a statistically significant difference in mean body fat percentage between males and females in this sample?
     No they seem to overlap a lot. 
 4.  Conduct a t-test and then interpret the results. What do they tell you about the null vs. alternative hypotheses?
@@ -49,4 +50,4 @@ fat_stats <- bodyfat |> group_by(gender) |>
 ```{r}
 t.test(body_fat_percent ~ gender, data = bodyfat)
 ```
-
+Men have significantly less body fat than women (t=2.8632, df=20.957, p-value=0.00932)
