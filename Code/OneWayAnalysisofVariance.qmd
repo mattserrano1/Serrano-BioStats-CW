@@ -1,0 +1,92 @@
+---
+title: "OneWayAnalysisofVariance"
+format: html
+editor: visual
+---
+
+setting up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+library(multcomp)
+```
+
+loading data
+```{r}
+Forest_dbh <- read.csv(here("Data", "Forest_Tree_DBH_F21.csv"))
+```
+
+fixing data types
+```{r}
+Forest_dbh$Forest <- as.factor(Forest_dbh$Forest)
+Forest_dbh$Date <- dmy(Forest_dbh$Date)
+```
+
+Making a box wisker plot to get initial look at the variation between forests
+
+1. Is there a difference between mean tree DBH
+2. If there is a difference, for which forests does the difference exist
+```{r}
+ggplot(Forest_dbh, aes(x=Forest, y=DBH_cm))+
+  geom_boxplot()+
+  geom_jitter(width=0.1)#makes points not on top of each other like point
+  theme_bw()
+```
+
+Making a model 
+```{r}
+Model_dbh <- lm(DBH_cm ~ Forest, data = Forest_dbh)
+```
+
+Checking the assumptions of the model
+```{r}
+autoplot(Model_dbh, smooth.colour = NA)
+```
+
+Doing the anova model
+```{r}
+anova(Model_dbh)
+```
+What are the effects?
+```{r}
+summary(Model_dbh)
+```
+
+Doing a Tukey's HSD (honestly significant difference) test. 
+- You ony do one of these tests if there is a significant difference in your response variable. 
+mcp means a multiple comparison test
+```{r}
+PHC1 <- glht(Model_dbh, linfct = mcp(Forest = 'Tukey'))
+summary(PHC1)
+```
+Make it easier to read using compact letter display CLD()
+- Any groups that have the same letter are not signifigant from each other. 
+```{r}
+cld(PHC1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
